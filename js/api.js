@@ -4,7 +4,7 @@
 
 // Alamat server PHP. Ganti kalau port/alamatnya berbeda.
 //  - Browser di laptop yang sama : http://localhost:8000
-const API_URL = "http://localhost:8000";
+const API_URL = "https://generic-suitable-wars-factors.trycloudflare.com ";
 
 // Buat "klien" axios dengan pengaturan dasar.
 const api = axios.create({
@@ -40,7 +40,7 @@ api.interceptors.response.use(
       catatLog(error.config, 0, { error: "Tidak ada balasan dari server" });
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 // ---------- Fungsi dasar ----------
@@ -63,18 +63,26 @@ async function panggil(method, url, data) {
 }
 
 // ---------- Satu fungsi untuk satu endpoint ----------
-const apiLogin   = (email, password) => panggil("post", "/api/login", { email, password });
-const apiLogout  = () => panggil("post", "/api/logout");
-const apiAmbil   = () => panggil("get", "/api/notes");                 // Read
-const apiBuat    = (payload) => panggil("post", "/api/notes", payload); // Create
-const apiUbah    = (id, payload) => panggil("put", "/api/notes/" + id, payload); // Update
-const apiHapus   = (id) => panggil("delete", "/api/notes/" + id);     // Delete
+const apiLogin = (email, password) => panggil("post", "/api/login", { email, password });
+const apiLogout = () => panggil("post", "/api/logout");
+const apiAmbil = () => panggil("get", "/api/notes"); // Read
+const apiBuat = (payload) => panggil("post", "/api/notes", payload); // Create
+const apiUbah = (id, payload) => panggil("put", "/api/notes/" + id, payload); // Update
+const apiHapus = (id) => panggil("delete", "/api/notes/" + id); // Delete
 
 // ---------- Panel log (hanya untuk keperluan belajar) ----------
 const NAMA_STATUS = {
-  0: "Tidak terhubung", 200: "OK", 201: "Created", 204: "No Content",
-  400: "Bad Request", 401: "Unauthorized", 404: "Not Found", 405: "Method Not Allowed",
-  409: "Conflict", 422: "Unprocessable", 500: "Server Error",
+  0: "Tidak terhubung",
+  200: "OK",
+  201: "Created",
+  204: "No Content",
+  400: "Bad Request",
+  401: "Unauthorized",
+  404: "Not Found",
+  405: "Method Not Allowed",
+  409: "Conflict",
+  422: "Unprocessable",
+  500: "Server Error",
 };
 
 function buatBaris(label, isi) {
@@ -124,7 +132,9 @@ function catatLog(config, status, data) {
       const obj = JSON.parse(config.data);
       if (obj.password) obj.password = "******";
       tampil = JSON.stringify(obj, null, 2);
-    } catch (e) { /* biarkan apa adanya */ }
+    } catch (e) {
+      /* biarkan apa adanya */
+    }
     entry.appendChild(buatBaris("Body dikirim", tampil));
   }
 
