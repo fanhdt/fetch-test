@@ -4,7 +4,7 @@
 
 // Alamat server PHP. Ganti kalau port/alamatnya berbeda.
 //  - Browser di laptop yang sama : http://localhost:8000
-const API_URL = "https://generic-suitable-wars-factors.trycloudflare.com ";
+const API_URL = "https://generic-suitable-wars-factors.trycloudflare.com";
 
 // Buat "klien" axios dengan pengaturan dasar.
 const api = axios.create({
